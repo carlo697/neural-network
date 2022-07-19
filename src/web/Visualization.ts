@@ -1,10 +1,16 @@
+import { HyperbolicTangentFunction } from "../Activation/HyperbolicTangentFunction.js";
+import { Link } from "../Link.js";
 import { Network } from "../Network.js";
 
-const network = new Network(50, 10, [25, 20, 15, 10, 10]);
+// const network = new Network(10, 20, [4, 5]);
 
-// const network = new Network(4, 2, [3]);
-// const result = network.feedForward([...Array(4)].map(() => Math.random()));
-console.log();
+const network = new Network(4, 2, [3], true, true, new HyperbolicTangentFunction());
+
+// const result = network.feedForward([...new Array(4)].map(() => Math.random()));
+const inputs = [0.5, 0, 0, 0];
+console.log("Inputs:", inputs);
+const result = network.feedForward(inputs);
+console.log("Result:", result);
 
 const canvasPadding = 20;
 // const layerMargin = 200;

@@ -6,9 +6,18 @@ export class Layer {
   neurons: Neuron[];
   previous: Layer | null;
 
-  constructor(network: Network, previous: Layer | null, neuronCount: number) {
+  constructor(
+    network: Network,
+    previous: Layer | null,
+    neuronCount: number,
+    generateLinks: boolean = false,
+    randomlyGenerateWeights: boolean = false
+  ) {
     this.network = network;
     this.previous = previous;
-    this.neurons = Array.from({ length: neuronCount }, () => new Neuron(this));
+    this.neurons = Array.from(
+      { length: neuronCount },
+      () => new Neuron(this, generateLinks, randomlyGenerateWeights)
+    );
   }
 }

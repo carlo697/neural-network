@@ -11,6 +11,8 @@ export class Network {
     inputs: number,
     outputs: number,
     hiddenLayers: number[],
+    generateLinks: boolean = false,
+    randomlyGenerateWeights: boolean = false,
     public activationFunction: ActivationFunction = new SigmoidActivation()
   ) {
     // Create input layer
@@ -21,12 +23,24 @@ export class Network {
     // Create hidden layers
     let lastLayer = this.inputLayer;
     hiddenLayers.forEach((neuronCount) => {
-      lastLayer = new Layer(this, lastLayer, neuronCount);
+      lastLayer = new Layer(
+        this,
+        lastLayer,
+        neuronCount,
+        generateLinks,
+        randomlyGenerateWeights
+      );
       this.layers.push(lastLayer);
     });
 
     // Create output layer
-    const outputLayer = new Layer(this, lastLayer, outputs);
+    const outputLayer = new Layer(
+      this,
+      lastLayer,
+      outputs,
+      generateLinks,
+      randomlyGenerateWeights
+    );
     this.layers.push(outputLayer);
     this.outputLayer = outputLayer;
   }
@@ -34,8 +48,7 @@ export class Network {
   feedForward(inputs: number[]) {
     let lastOutput = inputs;
 
-    console.log(inputs);
-
+    // Start at the second layer
     for (let i = 1; i < this.layers.length; i++) {
       const layer = this.layers[i];
       const layerOutput: number[] = [];
