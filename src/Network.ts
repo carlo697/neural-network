@@ -45,6 +45,33 @@ export class Network {
     this.outputLayer = outputLayer;
   }
 
+  clone(activationFunction: ActivationFunction) {
+    const clone = new Network(
+      this.inputLayer.neurons.length,
+      this.outputLayer.neurons.length,
+      this.layers.slice(1, -1).map((layer) => layer.neurons.length),
+      true,
+      false,
+      activationFunction
+    );
+    clone.copyLinks(this);
+    return clone;
+  }
+
+  copyLinks(from: Network) {
+    for (let layerIdx = 1; layerIdx < this.layers.length; layerIdx++) {
+      const layer = this.layers[layerIdx];
+      for (let neuronIdx = 0; neuronIdx < layer.neurons.length; neuronIdx++) {
+        const neuron = layer.neurons[neuronIdx];
+        for (let linkIdx = 0; linkIdx < neuron.links.length; linkIdx++) {
+          const link = neuron.links[linkIdx];
+          link.weigth =
+            from.layers[layerIdx].neurons[neuronIdx].links[linkIdx].weigth;
+        }
+      }
+    }
+  }
+
   feedForward(inputs: number[]) {
     let lastOutput = inputs;
 
@@ -72,5 +99,19 @@ export class Network {
     }
 
     return lastOutput;
+  }
+
+  static calculateTotalConnections(
+    inputs: number,
+    outputs: number,
+    hiddenLayers: number[]
+  ): number {
+    let total = inputs * hiddenLayers[0];
+    for (let i = 0; i < hiddenLayers.length - 1; i++) {
+      total += hiddenLayers[i] * hiddenLayers[i + 1];
+    }
+    total += hiddenLayers[hiddenLayers.length - 1] * outputs;
+
+    return total;
   }
 }
