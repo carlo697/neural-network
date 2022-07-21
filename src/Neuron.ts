@@ -15,11 +15,13 @@ export class Neuron {
     this.layer = layer;
 
     if (generateLinks) {
-      this.bias = bias ?? (randomlyGenerateWeights ? Math.random() * 2 - 1 : 0);
+      // this.bias = bias ?? (randomlyGenerateWeights ? Math.random() * 2 - 1 : 0);
 
       // Create random links if the layer exists
       layer.previous?.neurons?.forEach((neuron) => {
-        const weigth = randomlyGenerateWeights ? Math.random() * 2 - 1 : 0;
+        const weigth = randomlyGenerateWeights
+          ? (Math.random() * 2 - 1) * 4
+          : 0;
         this.links.push(new Link(neuron, this, weigth));
       });
     }
