@@ -27,10 +27,7 @@ export const drawNeuronalNetwork = (
   canvas.width = canvas.getBoundingClientRect().width;
   canvas.height = maxNeurons * (neuronDiameter + neuronMargin) + padding * 2;
 
-  const layerMargin =
-    canvas.width / (network.layers.length - 1) -
-    neuronDiameter * (network.layers.length - 1) +
-    padding;
+  const layerMargin = (canvas.width - (neuronDiameter * (network.layers.length)) - padding) / (network.layers.length - 1)
 
   context.translate(padding, padding);
   let lasAvailable = 1;

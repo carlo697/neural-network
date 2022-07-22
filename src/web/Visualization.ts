@@ -1,7 +1,7 @@
 import { drawNeuronalNetwork } from "../Helpers/drawNeuronalNetwork.js";
 import { Network } from "../Network.js";
 
-const network = new Network(10, 20, [4, 5], true, true);
+const network = new Network(10, 20, [4, 5, 5,2, 3, 6], true, true);
 
 // const network = new Network(4, 2, [3], true, true, new HyperbolicTangentFunction());
 
